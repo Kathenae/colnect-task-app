@@ -1,0 +1,44 @@
+{% extends "base.twig.html" %}
+
+{% block head %}
+<script src="./assets/js/home.js"></script>
+{% endblock %}
+
+{% block content %}
+<form method="post" onsubmit="handleSubmit(event)">
+   <div class="form-group">
+      <label for="target_url">Target URL</label>
+      <input type="url" placeholder="Ex: https://picocss.com" name="targetUrl" />
+      <ul id="targetUrlErrors"></ul>
+   </div>
+   <div class="form-group">
+      <label for="target_element">Target HTML Element</label>
+      <input type="text" name="targetElement" />
+      <ul id="targetElementErrors"></ul>
+   </div>
+
+   <button type="submit" aria-busy="false">Submit</button>
+</form>
+
+<article id="resultsCard">
+   <details id="requestResults" open hidden>
+      <summary>Request Results</summary>
+      <ul>
+      </ul>
+   </details>
+   <details id="requestStats" open hidden>
+      <summary>General Statistics</summary>
+      <ul>
+         <!-- <li>28 different URLs from colnect.com have been fetched</li>
+         <li>Average fetch time from colnect.com during the last 24 hours hours is 472ms</li>
+         <li>There was a total of 91 <img> elements from colnect.com</li>
+         <li>Total of 1720 <img> elements counted in all requests ever made.</li> -->
+      </ul>
+   </details>
+   <div id="progress" hidden>
+      <a href="#" aria-busy="true">Analysing page, please wait...</a>
+   </div>
+   <div id="errorMessage">
+   </div>
+</article>
+{% endblock %}

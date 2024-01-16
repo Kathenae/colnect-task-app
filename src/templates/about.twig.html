@@ -1,0 +1,42 @@
+{% extends "base.twig.html" %}
+
+{% block content %}
+<h1>About</h1>
+<p>
+   This is a web application that allows users to retrieve information about the occurrence of a
+   specific HTML element on a given web page. This application is built using PHP, MySQL, JavaScript, and CSS.
+</p>
+
+<section>
+   <h2>Background</h2>
+   <p>
+      As part of the interview process for a fullstack developer position at <a href="https://colnect.com/"
+         target="_blank">Colnect</a>, I was given the task to create a simple web app that could count the occurences of
+      a
+      given html element on a given page. the requirements included the ability to
+      fetch the HTML content of the provided URL, count the
+      occurrences of the specified element, and display the results, including the fetched URL, date and time of the
+      response, response time, and the count of elements.
+   </p>
+
+   <p>
+      Additionally, the project required implementing statistics for all requests, including the
+      number of URLs from the domain that have been checked, the average page fetch time from that domain in the last 24
+      hours, the total count of the specified element from that domain, and the total count of the specified element
+      from
+      all requests ever made.
+   </p>
+
+   <p>
+      The application also needed to handle client and server-side validation, error handling for
+      cases such as invalid or inaccessible URLs and server restrictions, and special attention needed to be had for the
+      database schema to avoid redundant data and facilitate efficient queries.
+   </p>
+</section>
+
+<section>
+   <h2>Contact Information</h2>
+   <p>If you have any questions, feedback, or suggestions regarding the app, please feel free to contact me at
+      Ronald43.github@example.com.</p>
+</section>
+{% endblock %}

@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# Exclude public folder from rewrite rules
+RewriteRule ^(public)($|/) - [L]
+
+# Rewrite all other requests to index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [L]

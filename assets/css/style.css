@@ -1,0 +1,8 @@
+:root {
+   --danger: var(--del-color)
+}
+
+.text-error {
+   color: var(--danger);
+   font: medium;
+}

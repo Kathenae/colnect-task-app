@@ -1,0 +1,15 @@
+<?php
+
+require_once './vendor/autoload.php';
+
+use Doctrine\ORM\Tools\Console\ConsoleRunner;
+use Doctrine\ORM\Tools\Console\EntityManagerProvider\SingleManagerProvider;
+use Ronald\ElementCounter\Components\Database;
+use Ronald\ElementCounter\Components\Env;
+
+Env::init();
+Database::init();
+
+ConsoleRunner::run(
+   new SingleManagerProvider(Database::manager()),
+);

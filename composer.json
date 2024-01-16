@@ -1,0 +1,22 @@
+{
+    "name": "elemizer/app",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Elemizer\\App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ronald",
+            "email": "RonaldWilsonMachado@gmail.com"
+        }
+    ],
+    "require": {
+        "pecee/simple-router": "5.4.1.7",
+        "twig/twig": "^3.8",
+        "doctrine/orm": "^2.17",
+        "symfony/cache": "^6.4",
+        "vlucas/phpdotenv": "^5.6"
+    }
+}
