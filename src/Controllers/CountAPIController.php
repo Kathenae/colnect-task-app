@@ -36,7 +36,7 @@ class CountAPIController
             $response = $httpClient->request($targetUrl);
 
             if ($response->statusIsOkay() == false) {
-               APIResponse::emitErrorMessage();
+               APIResponse::emitErrorMessage("Unable to fetch URL. The server might have some restrictions or an error occurred internally");
             }
 
             $request = Models\Request::create(
