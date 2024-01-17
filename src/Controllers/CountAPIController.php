@@ -18,8 +18,6 @@ class CountAPIController
 
    /**
     * Handles the request for counting elements in a web page.
-    *
-    * @return void
     */
    public function index()
    {
@@ -56,8 +54,6 @@ class CountAPIController
 
    /**
     * Validates and retrieves the inputs from the request.
-    *
-    * @return array|null An associative array of validated inputs if there are no validation errors, null otherwise.
     */
    private function getValidatedInputs()
    {
