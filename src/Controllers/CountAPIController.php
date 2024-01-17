@@ -1,14 +1,14 @@
 <?php
 
-namespace Elemizer\App\Controllers;
+namespace App\Controllers;
 
 use DateTime;
-use Elemizer\App\Components\APIResponse;
-use Elemizer\App\Components\Database;
-use Elemizer\App\Components\ErrorBag;
-use Elemizer\App\Components\HtmlInspector;
-use Elemizer\App\Components\HttpClient\HttpClient;
-use Elemizer\App\Models;
+use App\Components\APIResponse;
+use App\Components\Database;
+use App\Components\ErrorBag;
+use App\Components\HtmlInspector;
+use App\Components\HttpClient\HttpClient;
+use App\Models;
 use Exception;
 
 class CountAPIController

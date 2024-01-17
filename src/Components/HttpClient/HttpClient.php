@@ -1,8 +1,8 @@
 <?php
 
-namespace Elemizer\App\Components\HttpClient;
+namespace App\Components\HttpClient;
 
-use Elemizer\App\Components\HttpClient\HttpClientResponse;
+use App\Components\HttpClient\HttpClientResponse;
 
 class HttpClient
 {

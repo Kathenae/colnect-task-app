@@ -1,8 +1,8 @@
 <?php
 
-namespace Elemizer\App\Controllers;
+namespace App\Controllers;
 
-use Elemizer\App\Components\Template;
+use App\Components\Template;
 
 class HomeController
 {

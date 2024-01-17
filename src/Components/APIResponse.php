@@ -1,6 +1,6 @@
 <?php
 
-namespace Elemizer\App\Components;
+namespace App\Components;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;

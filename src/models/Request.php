@@ -1,11 +1,11 @@
 <?php
 
-namespace Elemizer\App\Models;
+namespace App\Models;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ManyToOne;
-use Elemizer\App\Components\Database;
+use App\Components\Database;
 
 #[ORM\Entity]
 class Request
@@ -67,7 +67,7 @@ class Request
       SELECT 
          COUNT(DISTINCT(r.url)) 
       FROM 
-         Elemizer\App\Models\Request r 
+         App\Models\Request r 
       JOIN 
          r.domain d where d = :domain
       EOD);
@@ -82,7 +82,7 @@ class Request
       $query = Database::manager()->createQuery(<<<EOD
       SELECT
           AVG(r.durationMs) 
-      FROM Elemizer\App\Models\Request r 
+      FROM App\Models\Request r 
       JOIN 
          r.domain d WHERE d = :domain AND r.fetchedAt >= :timespan         
       EOD);
@@ -97,7 +97,7 @@ class Request
       $query = Database::manager()->createQuery(<<<EOD
       SELECT 
          SUM(r.elementCount) 
-      FROM Elemizer\App\Models\Request r 
+      FROM App\Models\Request r 
       JOIN 
          r.domain d 
       JOIN 
@@ -117,7 +117,7 @@ class Request
       SELECT 
          SUM(r.elementCount) 
       FROM 
-         Elemizer\App\Models\Request r 
+         App\Models\Request r 
       JOIN 
          r.element e 
       WHERE e = :element

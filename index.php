@@ -1,9 +1,9 @@
 <?php
 
 use Pecee\SimpleRouter\SimpleRouter;
-use Elemizer\App\Components\Database;
-use Elemizer\App\Components\Env;
-use Elemizer\App\Components\Template;
+use App\Components\Database;
+use App\Components\Env;
+use App\Components\Template;
 
 require_once './vendor/autoload.php';
 require_once './src/Components/RouterHelper.php';

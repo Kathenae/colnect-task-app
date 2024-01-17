@@ -1,13 +1,13 @@
 <?php
 
-namespace Elemizer\App\Components;
+namespace App\Components;
 
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMSetup;
-use Elemizer\App\Components\Env;
+use App\Components\Env;
 
 class Database
 {

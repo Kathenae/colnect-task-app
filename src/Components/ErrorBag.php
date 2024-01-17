@@ -1,6 +1,6 @@
 <?php
 
-namespace Elemizer\App\Components;
+namespace App\Components;
 
 class ErrorBag
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Elemizer\App\Components\HttpClient;
+namespace App\Components\HttpClient;
 
 use CurlHandle;
 
