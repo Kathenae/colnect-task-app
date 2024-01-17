@@ -9,6 +9,7 @@ use App\Components\ErrorBag;
 use App\Components\HtmlInspector;
 use App\Components\HttpClient\HttpClient;
 use App\Models;
+use App\Models\Request;
 use Exception;
 
 class CountAPIController
@@ -21,34 +22,39 @@ class CountAPIController
     */
    public function index()
    {
-      // Get inputs
-      $inputs = $this->getValidatedInputs();
-      $targetUrl = $inputs[self::FIELD_URL];
-      $targetElement = $inputs[self::FIELD_ELEMENT];
-
-      // Fetch URL and handle errors.
-      $httpClient = new HttpClient($targetUrl);
-      $response = $httpClient->request($targetUrl);
-
-      if ($response->statusIsOkay() == false) {
-         APIResponse::emitErrorMessage('Something went wrong. please contant the developer!');
-      }
-
       try {
-         $request = Models\Request::create(
-            elementName: $targetElement,
-            urlName: $targetUrl,
-            domainName: $response->getDomainName(),
-            durationMs: $response->getConnectDurationMs(),
-            elementCount: HtmlInspector::countElement($targetElement, $response->getBody()),
-         );
-         Database::manager()->persist($request);
-         Database::manager()->flush();
+         $inputs = $this->getValidatedInputs();
+         $targetUrl = $inputs[self::FIELD_URL];
+         $targetElement = $inputs[self::FIELD_ELEMENT];
+
+         // Find request in the last 5 minute
+         $request = Request::findOneByTime($targetUrl, $targetElement, new DateTime("-5 minutes"));
+
+         if (!isset($request)) {
+            // Fetch URL and handle errors.
+            $httpClient = new HttpClient($targetUrl);
+            $response = $httpClient->request($targetUrl);
+
+            if ($response->statusIsOkay() == false) {
+               APIResponse::emitErrorMessage();
+            }
+
+            $request = Models\Request::create(
+               elementName: $targetElement,
+               urlName: $targetUrl,
+               domainName: $response->getDomainName(),
+               durationMs: $response->getConnectDurationMs(),
+               elementCount: HtmlInspector::countElement($targetElement, $response->getBody()),
+            );
+            Database::manager()->persist($request);
+            Database::manager()->flush();
+         }
 
          $results = $request->results();
          APIResponse::emitSuccessData($results);
       } catch (Exception $e) {
-         APIResponse::emitErrorMessage('Something went wrong. please contant the developer!');
+         throw $e;
+         APIResponse::emitErrorMessage();
       }
    }
 

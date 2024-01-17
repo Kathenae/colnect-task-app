@@ -7,35 +7,13 @@ use Illuminate\Validation\ValidationException;
 
 class APIResponse
 {
-   /**
-    * HTTP status code for a successful response.
-    */
    const HTTP_STATUS_OK = 200;
-
-   /**
-    * HTTP status code for a validation error response.
-    */
    const HTTP_STATUS_VALIDATION_ERROR = 422;
-
-   /**
-    * API status for a successful response.
-    */
    const API_STATUS_SUCCESS = 'success';
-
-   /**
-    * API status for an error response.
-    */
    const API_STATUS_ERROR = 'error';
-
-   /**
-    * API status for a validation error response.
-    */
    const API_STATUS_VALIDATION_ERROR = 'validation-error';
-
-   /**
-    * API status for an error message response.
-    */
    const API_STATUS_ERROR_MESSAGE = 'error-message';
+   const DEFAULT_ERROR_MESSAGE = 'Something went wrong. please contact the developer!';
 
    /**
     * Create and send successful API response.
@@ -58,7 +36,7 @@ class APIResponse
     * @param string $errorMessage The error message to be included in the response.
     * @return void
     */
-   public static function emitErrorMessage(string $errorMessage)
+   public static function emitErrorMessage(string $errorMessage = self::DEFAULT_ERROR_MESSAGE)
    {
       response()->json([
          'status' => APIResponse::API_STATUS_ERROR_MESSAGE,

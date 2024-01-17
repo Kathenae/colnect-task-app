@@ -145,6 +145,29 @@ class Request
       return $sum;
    }
 
+   public static function findOneByTime(string $url, string $elementName, DateTime $timespan): Request | null
+   {
+      $query = Database::manager()->createQuery(<<<EOD
+      SELECT
+          r
+      FROM App\Models\Request r 
+      JOIN 
+         r.url u 
+      JOIN
+         r.element e
+      WHERE 
+         u.name = :urlName AND e.name = :elementName AND r.fetchedAt >= :timespan   
+      ORDER BY
+         r.fetchedAt DESC   
+      EOD);
+      $query->setParameter('urlName', $url);
+      $query->setParameter('elementName', $elementName);
+      $query->setParameter('timespan', $timespan);
+      $query->setMaxResults(1);
+      $result = $query->getOneOrNullResult();
+      return $result;
+   }
+
    public static function create(string $elementName, int $elementCount, string $domainName, string $urlName, float $durationMs, DateTime $fetchedAt = new DateTime())
    {
       // find domain or create new
