@@ -53,7 +53,6 @@ class CountAPIController
          $results = $request->results();
          APIResponse::emitSuccessData($results);
       } catch (Exception $e) {
-         throw $e;
          APIResponse::emitErrorMessage();
       }
    }
