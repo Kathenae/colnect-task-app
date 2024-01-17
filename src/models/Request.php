@@ -104,27 +104,45 @@ class Request
          r.element e 
       WHERE 
          d = :domain AND e = :element
+      AND NOT EXISTS (
+         SELECT 
+            other
+         FROM 
+            App\Models\Request other 
+         WHERE 
+            other.url = r.url 
+            AND other.fetchedAt > r.fetchedAt
+      )
       EOD);
       $query->setParameter('domain', $this->domain);
       $query->setParameter('element', $this->element);
-      $count = $query->getSingleScalarResult();
-      return $count;
+      $sum = $query->getSingleScalarResult();
+      return $sum;
    }
 
    public function countElementsForAllRequest()
    {
       $query = Database::manager()->createQuery(<<<EOD
       SELECT 
-         SUM(r.elementCount) 
+         sum(r.elementCount)
       FROM 
          App\Models\Request r 
       JOIN 
          r.element e 
       WHERE e = :element
+      AND NOT EXISTS (
+         SELECT 
+            other
+         FROM 
+            App\Models\Request other 
+         WHERE 
+            other.url = r.url 
+            AND other.fetchedAt > r.fetchedAt
+      )
       EOD);
       $query->setParameter('element', $this->element);
-      $count = $query->getSingleScalarResult();
-      return $count;
+      $sum = $query->getSingleScalarResult();
+      return $sum;
    }
 
    public static function create(string $elementName, int $elementCount, string $domainName, string $urlName, float $durationMs, DateTime $fetchedAt = new DateTime())
