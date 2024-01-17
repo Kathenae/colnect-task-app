@@ -30,20 +30,20 @@ async function handleSubmit(event) {
       setLoading(false)
 
       if (response.status == 'success') {
-         const { url, fetchedAt, fetchDurationMs, element, domainName, count, stats } = response.data;
+         const { urlName, fetchedAt, fetchDurationMs, elementName, domainName, elementCount, stats } = response.data;
          const resultsList = document.querySelector(`${QUERY_REQUEST_RESULTS_DIV} ul`);
 
          resultsList.innerHTML = `
-         <li>URL <b>${url}</b> Fetched on ${new Date(fetchedAt.date).toLocaleString()}, took <b>${fetchDurationMs.toFixed(0)}ms.</b></li>\n
-         <li>Element <mark>${element}</mark> appeared <b>${count} times</b> in the page</li>\n
+         <li>URL <b>${urlName}</b> Fetched on ${new Date(fetchedAt.date).toLocaleString()}, took <b>${fetchDurationMs.toFixed(0)}ms.</b></li>\n
+         <li>Element <mark>${elementName}</mark> appeared <b>${elementCount} times</b> in the page</li>\n
          `;
 
          const statsList = document.querySelector(`${QUERY_REQUEST_STATS_DIV} ul`);
          statsList.innerHTML = `
-         <li>${stats.urlCount} different URLs from <b>${domainName}</b> have been fetched</li>
-         <li>Average fetch time from <b>${domainName}</b> during the last 24 hours hours is <b>${stats.averageFetchTime.toFixed(0)}ms</b></li>
-         <li>There was a total of <b>${stats.elementCountDomain}</b> <mark>${element}</mark> elements counted from <b>${domainName}</b></li>
-         <li>Total of <b>${stats.elementCountAll}</b> <mark>${element}</mark> elements counted in all requests ever made.</li>
+         <li>${stats.domainTotalUrls} different URLs from <b>${domainName}</b> have been fetched</li>
+         <li>Average fetch time from <b>${domainName}</b> during the last 24 hours hours is <b>${stats.domainAvgResponseTime.toFixed(0)}ms</b></li>
+         <li>There was a total of <b>${stats.elementsCountOnDomain}</b> <mark>${elementName}</mark> elements counted from <b>${domainName}</b></li>
+         <li>Total of <b>${stats.elementCountOnAllRequests}</b> <mark>${elementName}</mark> elements counted in all requests ever made.</li>
          `
       }
       else {

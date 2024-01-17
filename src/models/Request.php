@@ -17,13 +17,13 @@ class Request
 
    public function __construct(
       #[ORM\Column(type: 'float')]
-      private float $duration,
+      private float $durationMs,
 
       #[ORM\Column(type: 'integer')]
       private int $elementCount,
 
       #[ORM\Column(type: 'datetime')]
-      private DateTime $time,
+      private DateTime $fetchedAt,
 
       #[ManyToOne(targetEntity: Domain::class)]
       private Domain $domain,
@@ -38,25 +38,28 @@ class Request
 
    public function results()
    {
-      $urlCount = $this->getTotalUrlAppearances();
+      $domainTotalUrls = $this->domainTotalUrls();
       $averageFetchTime = $this->getAvgResponseTime(new DateTime('-24 hours'));
       $elementCountDomain = $this->countElementsForDomain();
       $elementCountAll = $this->countElementsForAllRequest();
 
       return [
-         'domain' => $this->domain->getName(),
-         'url' => $this->url->getName(),
+         'elementCount' => $this->elementCount,
          'elementName' => $this->element->getName(),
-         'fetchedAt' => $this->time,
-         'urlCount' => $urlCount,
-         'fetchTime' => $this->duration,
-         'averageFetchTime' => $averageFetchTime,
-         'elementCountDomain' => $elementCountDomain,
-         'elementCountAll' => $elementCountAll
+         'domainName' => $this->domain->getName(),
+         'urlName' => $this->url->getName(),
+         'fetchedAt' => $this->fetchedAt,
+         'fetchDurationMs' => $this->durationMs,
+         'stats' => [
+            'domainTotalUrls' => $domainTotalUrls,
+            'domainAvgResponseTime' => $averageFetchTime,
+            'elementsCountOnDomain' => $elementCountDomain,
+            'elementCountOnAllRequests' => $elementCountAll
+         ]
       ];
    }
 
-   public function getTotalUrlAppearances()
+   public function domainTotalUrls()
    {
       $entityManager = Database::manager();
 
@@ -78,10 +81,10 @@ class Request
    {
       $query = Database::manager()->createQuery(<<<EOD
       SELECT
-          AVG(r.duration) 
+          AVG(r.durationMs) 
       FROM Elemizer\App\Models\Request r 
       JOIN 
-         r.domain d WHERE d = :domain AND r.time >= :timespan         
+         r.domain d WHERE d = :domain AND r.fetchedAt >= :timespan         
       EOD);
       $query->setParameter('domain', $this->domain);
       $query->setParameter('timespan', $timespan);
@@ -124,7 +127,7 @@ class Request
       return $count;
    }
 
-   public static function create(string $elementName, int $elementCount, string $domainName, string $urlName, DateTime $time, float $duration)
+   public static function create(string $elementName, int $elementCount, string $domainName, string $urlName, float $durationMs, DateTime $fetchedAt = new DateTime())
    {
       // find domain or create new
       $domain = Database::manager()->getRepository(Domain::class)->findOneBy(['name' => $domainName]);
@@ -154,8 +157,8 @@ class Request
          url: $url,
          element: $element,
          elementCount: $elementCount,
-         duration: $duration,
-         time: $time,
+         durationMs: $durationMs,
+         fetchedAt: $fetchedAt,
       );
 
       return $request;

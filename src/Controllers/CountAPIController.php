@@ -9,6 +9,7 @@ use Elemizer\App\Components\ErrorBag;
 use Elemizer\App\Components\HtmlInspector;
 use Elemizer\App\Components\HttpClient\HttpClient;
 use Elemizer\App\Models;
+use Exception;
 
 class CountAPIController
 {
@@ -32,29 +33,25 @@ class CountAPIController
       $response = $httpClient->request($targetUrl);
 
       if ($response->statusIsOkay() == false) {
-         APIResponse::emitErrorMessage('There was a problem analysing the page.');
+         APIResponse::emitErrorMessage('Something went wrong. please contant the developer!');
       }
 
-      // Parse response data
-      $elementCount = HtmlInspector::countElement($targetElement, $response->getBody());
-      $domainName = $response->getDomainName();
-      $duration = $response->getTotalDurationMs();
-      $time = new DateTime();
+      try {
+         $request = Models\Request::create(
+            elementName: $targetElement,
+            urlName: $targetUrl,
+            domainName: $response->getDomainName(),
+            durationMs: $response->getConnectDurationMs(),
+            elementCount: HtmlInspector::countElement($targetElement, $response->getBody()),
+         );
+         Database::manager()->persist($request);
+         Database::manager()->flush();
 
-      // Create request info with obtained info
-      $request = Models\Request::create(
-         elementName: $targetElement,
-         elementCount: $elementCount,
-         domainName: $domainName,
-         urlName: $targetUrl,
-         time: $time,
-         duration: $duration
-      );
-
-      Database::manager()->persist($request);
-      Database::manager()->flush();
-
-      APIResponse::emitSuccessData($request->results());
+         $results = $request->results();
+         APIResponse::emitSuccessData($results);
+      } catch (Exception $e) {
+         APIResponse::emitErrorMessage('Something went wrong. please contant the developer!');
+      }
    }
 
    /**
