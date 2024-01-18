@@ -8,7 +8,6 @@ use App\Components\Database;
 use App\Components\ErrorBag;
 use App\Components\HtmlInspector;
 use App\Components\HttpClient\HttpClient;
-use App\Models;
 use App\Models\Request;
 use Exception;
 
@@ -39,7 +38,7 @@ class CountAPIController
                APIResponse::emitErrorMessage("Unable to fetch URL. Check the url or try a diferrent one");
             }
 
-            $request = Models\Request::create(
+            $request = Request::create(
                elementName: $targetElement,
                urlName: $targetUrl,
                domainName: $response->getDomainName(),
