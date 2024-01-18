@@ -42,7 +42,7 @@ class CountAPIController
                elementName: $targetElement,
                urlName: $targetUrl,
                domainName: $response->getDomainName(),
-               durationMs: $response->getConnectDurationMs(),
+               durationMs: $response->getTotalDurationMs(),
                elementCount: HtmlInspector::countElement($targetElement, $response->getBody()),
             );
             Database::manager()->persist($request);
