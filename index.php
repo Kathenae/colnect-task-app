@@ -5,9 +5,9 @@ use App\Components\Database;
 use App\Components\Env;
 use App\Components\Template;
 
-require_once './vendor/autoload.php';
-require_once './src/Components/RouterHelper.php';
-require_once './src/routes/routes.php';
+require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/src/Components/RouterHelper.php';
+require_once __DIR__ . '/src/routes/routes.php';
 
 // Initialize Components
 Env::init();
