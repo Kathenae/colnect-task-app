@@ -21,7 +21,7 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22
         script: |
-          cd $PROJECT_DIRECTORY
-          git pull origin master
+          cd ${{ secrets.PROJECT_DIRECTORY }}
+          git pull
           composer install
           composer dump-autoload -o
