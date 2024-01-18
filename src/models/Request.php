@@ -74,7 +74,7 @@ class Request
 
       $query->setParameter('domain', $this->domain);
       $count = $query->getSingleScalarResult();
-      $count = !isset($count) ? $count : 0;
+      $count = isset($count) ? $count : 0;
       return $count;
    }
 
@@ -119,7 +119,7 @@ class Request
       $query->setParameter('domain', $this->domain);
       $query->setParameter('element', $this->element);
       $sum = $query->getSingleScalarResult();
-      $sum = !isset($sum) ? 0 : $sum;
+      $sum = isset($sum) ? $sum : 0;
       return $sum;
    }
 
@@ -145,7 +145,7 @@ class Request
       EOD);
       $query->setParameter('element', $this->element);
       $sum = $query->getSingleScalarResult();
-      $sum = !isset($sum) ? 0 : $sum;
+      $sum = isset($sum) ? $sum : 0;
       return $sum;
    }
 
