@@ -137,4 +137,9 @@ class HttpClientResponse
    {
       return $this->connectDuration * 1000;
    }
+
+   public function getUrl()
+   {
+      return $this->url;
+   }
 }

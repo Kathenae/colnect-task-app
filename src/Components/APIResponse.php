@@ -21,7 +21,7 @@ class APIResponse
     * @param array $data The data to be included in the response.
     * @return void
     */
-   public static function emitSuccessData(array $data)
+   public static function okResponse(array $data = null)
    {
       response()->httpCode(APIResponse::HTTP_STATUS_OK);
       response()->json([
@@ -36,8 +36,9 @@ class APIResponse
     * @param string $errorMessage The error message to be included in the response.
     * @return void
     */
-   public static function emitErrorMessage(string $errorMessage = self::DEFAULT_ERROR_MESSAGE)
+   public static function errorResponse(string $errorMessage = self::DEFAULT_ERROR_MESSAGE)
    {
+      response()->httpCode(400);
       response()->json([
          'status' => APIResponse::API_STATUS_ERROR_MESSAGE,
          'message' => $errorMessage,
@@ -50,7 +51,7 @@ class APIResponse
     * @param ErrorBag $errorBag The error bag containing validation errors.
     * @return void
     */
-   public static function emitValidationError(ErrorBag $errorBag)
+   public static function validationResponse(ErrorBag $errorBag)
    {
       response()->httpCode(APIResponse::HTTP_STATUS_VALIDATION_ERROR);
       response()->json([
