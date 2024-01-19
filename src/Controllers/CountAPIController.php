@@ -70,21 +70,30 @@ class CountAPIController
    {
       $targetUrl = input(self::FIELD_URL);
       $targetElement = input(self::FIELD_ELEMENT);
-      $targetUrl = strtolower($targetUrl);
-      $targetElement = strtolower($targetElement);
       $errorBag = new ErrorBag();
 
-      if (filter_var($targetUrl, FILTER_VALIDATE_URL) == false) {
-         $errorBag->addError(self::FIELD_URL, "You have entered an invalid URL");
+      if (empty($targetUrl)) {
+         $errorBag->addError(self::FIELD_URL, "Please provide the url of the page you wish to analyse.");
+      } elseif (!is_string($targetUrl)) {
+         $errorBag->addError(self::FIELD_URL, "This Must be a valid string.");
+      } elseif (!filter_var($targetUrl, FILTER_VALIDATE_URL)) {
+         $errorBag->addError(self::FIELD_URL, "'$targetUrl' is not a valid url.");
       }
 
-      if (!HtmlInspector::isValidElement($targetElement)) {
-         $errorBag->addError(self::FIELD_ELEMENT, "This is not a valid HTML element");
+      if (empty($targetElement)) {
+         $errorBag->addError(self::FIELD_ELEMENT, "Please provide the name of the html element you wish to count.");
+      } elseif (!is_string($targetElement)) {
+         $errorBag->addError(self::FIELD_ELEMENT, "This Must be a valid string.");
+      } elseif (!HtmlInspector::isValidElement($targetElement)) {
+         $errorBag->addError(self::FIELD_ELEMENT, "'$targetElement' is not a valid html element.");
       }
 
       if ($errorBag->hasErrors()) {
          APIResponse::validationResponse($errorBag);
       }
+
+      $targetElement = strtolower($targetElement);
+      $targetElement = htmlspecialchars($targetElement);
 
       return [
          self::FIELD_URL => $targetUrl,

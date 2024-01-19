@@ -1,6 +1,7 @@
 {% extends "base.twig.html" %}
 
 {% block head %}
+<script src="./assets/js/constants.js"></script>
 <script src="./assets/js/home.js"></script>
 {% endblock %}
 
@@ -8,12 +9,12 @@
 <form method="post" onsubmit="handleSubmit(event)">
    <div class="form-group">
       <label for="targetUrl">Target URL</label>
-      <input type="url" placeholder="Ex: https://picocss.com" name="targetUrl" />
+      <input type="text" placeholder="Ex: https://picocss.com" name="targetUrl" />
       <ul id="targetUrlErrors"></ul>
    </div>
    <div class="form-group">
       <label for="targetElement">Target HTML Element</label>
-      <input type="text" name="targetElement" />
+      <input type="text" placeholder="Ex: img" name="targetElement" />
       <ul id="targetElementErrors"></ul>
    </div>
 
