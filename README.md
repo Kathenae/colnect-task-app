@@ -4,7 +4,7 @@ You can access the website at [elemizer.worksper.com](https://elemizer.worksper.
 
 ### Deployment Details 
 
-This project is deployed on a VPS runnung Ubuntu 20 with the following software:
+This project is deployed on a VPS running the the following:
 - NGINX version 1.21.4
 - PHP version 8.2.11
 - MySQL version 8.0.34
