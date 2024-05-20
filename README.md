@@ -1,7 +1,5 @@
 # HTML Element Counter
 
-You can access the website at [elemizer.worksper.com](https://elemizer.worksper.com). 
-
 ### Deployment Details 
 
 This project is deployed on a VPS running the the following:
